@@ -62,6 +62,37 @@ rm -rf /app/*     #this helps in removing previous version and deploy new versio
 unzip /tmp/backend.zip
 VALIDATE $? "extracting latest backend app to tmp folder"
 
+npm install &>>$LOG_FILE
+cp /home/ec2-user/expense/backend.service /etc/systemd/system/backend.service 
+#above step , we copied backend.service file from git repo to the new folder backend.service on systemconfig in server
+
+dnf install mysql -y  &>>$LOG_FILE #loading data before running backend file , since we need client to connect to mysql server
+VALIDATE $? "installing MYSQL client"
+
+mysql -h mysql.yashd.icu -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+VALIDATE $? "Schema/database loaded"
+
+# /app/schema/backend.sql: This part tells MySQL to read and execute the SQL commands contained in the file located at /app/schema/backend.sql.
+# which are idempotent in nature
+# CREATE DATABASE IF NOT EXISTS transactions;
+# USE transactions;
+# CREATE TABLE IF NOT EXISTS transactions (
+#   id INT AUTO_INCREMENT PRIMARY KEY,
+#  amount INT,
+# description VARCHAR(255)
+# );
+# CREATE USER IF NOT EXISTS 'expense'@'%' IDENTIFIED BY 'ExpenseApp@1';
+# GRANT ALL ON transactions.* TO 'expense'@'%';
+# FLUSH PRIVILEGES;
+
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Daemon-reload"
+
+systemctl enable backend &>>$LOG_FILE
+VALIDATE $? "enabled backend"
+
+systemctl restart backend &>>$LOG_FILE
+VALIDATE $? "restarted backend"
 
 
 
