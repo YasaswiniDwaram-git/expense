@@ -57,10 +57,13 @@ systemctl start mysqld
 VALIDATE $? "Started MySQL server"
 STEP_STATUS $? "starting successfull , now setting up root password MYSQL" | tee -a $LOG_FILE
 
-mysql_secure_installation --set-root-pass ExpenseApp@1
+mysql -h mysql.yashd.icu -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
+
 if [ $? -ne 0 ]
 then
-    echo "root passwd not set up , setting now"
+    echo "root passwd not set up , setting now" | tee -a $LOG_FILE | tee -a $LOG_FILE
     mysql_secure_installation --set-root-pass ExpenseApp@1
-    VALIDATE $? " setting up in progess"
-STEP_STATUS $? "setting up root password is successful , now you can use my sql by typing 'mysql'" | tee -a $LOG_FILE
+else
+    echo "Root password is already set up ...$Y SKIPPING THE STEP $N " | tee -a $LOG_FILE
+    echo "now you can use my sql by typing 'mysql'" 
+fi 
