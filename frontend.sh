@@ -56,6 +56,7 @@ VALIDATE $? "Extracting frontend-code"
 
 cp /home/ec2-user/expense/frontend-code /etc/nginx/default.d/expense.conf
 
-
+systemctl restart nginx
+VALIDATE $? "Restarting nginx"
 
 
