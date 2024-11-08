@@ -64,6 +64,6 @@ then
     echo "root passwd not set up , setting now" | tee -a $LOG_FILE | tee -a $LOG_FILE
     mysql_secure_installation --set-root-pass ExpenseApp@1
 else
-    echo "Root password is already set up ...$Y SKIPPING THE STEP $N " | tee -a $LOG_FILE
+    echo -e "Root password is already set up ...$Y SKIPPING THE STEP $N " | tee -a $LOG_FILE
     echo "now you can use my sql by typing 'mysql'" 
 fi 
