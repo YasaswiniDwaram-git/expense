@@ -31,16 +31,25 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y
+echo "script started executing at : $TIME_STAMP " | tee -a $LOG_FILE
+
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "DISABLING DEFAULT NODE JS"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "ENABLING NODE JS - V20 "
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "INSTALLING NODE JS"
 
-useradd expense
-VALIDATE $? "creating system user :expense"
+id expense
+if [ $? -ne 0 ]
+then
+    useradd expense &>>$LOG_FILE
+    VALIDATE $? "creating system user -expense as it does not exist"
+else 
+    echo "user already present"
+fi
+
 
 
