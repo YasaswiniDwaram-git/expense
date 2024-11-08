@@ -42,7 +42,7 @@ VALIDATE $? "ENABLING NODE JS - V20 "
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "INSTALLING NODE JS"
 
-id expense
+id expense &>>$LOG_FILE
 if [ $? -ne 0 ]
 then
     useradd expense &>>$LOG_FILE
@@ -50,6 +50,17 @@ then
 else 
     echo -e "user already present , hence $Y SKIPPIN $N "
 fi
+
+mkdir -p /app &>>$LOG_FILE
+VALIDATE $? "Creating app folder"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
+VALIDATE $? "Downloding backend app code"
+
+cd /app &>>$LOG_FILE
+unzip /tmp/backend.zip
+VALIDATE $? "extracting backend app to tmp folder"
+
 
 
 
