@@ -63,7 +63,7 @@ unzip /tmp/backend.zip
 VALIDATE $? "extracting latest backend app to tmp folder"
 
 npm install &>>$LOG_FILE
-cp /home/ec2-user/expense/backend.service /etc/systemd/system/backend.service 
+cp /home/ec2-user/expense/backend-service /etc/systemd/system/backend.service 
 #above step , we copied backend.service file from git repo to the new folder backend.service on systemconfig in server
 
 dnf install mysql -y  &>>$LOG_FILE #loading data before running backend file , since we need client to connect to mysql server
