@@ -69,7 +69,7 @@ cp /home/ec2-user/expense/backend-service /etc/systemd/system/backend.service
 dnf install mysql -y  &>>$LOG_FILE #loading data before running backend file , since we need client to connect to mysql server
 VALIDATE $? "installing MYSQL client"
 
-mysql -h mysql.yashd.icu -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+mysql -h 3.88.50.165 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
 VALIDATE $? "Schema/database loaded"
 
 # /app/schema/backend.sql: This part tells MySQL to read and execute the SQL commands contained in the file located at /app/schema/backend.sql.
