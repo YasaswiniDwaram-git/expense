@@ -55,7 +55,7 @@ STEP_STATUS $? "enabling successfull , now will start MYSQL" | tee -a $LOG_FILE
 
 systemctl start mysqld
 VALIDATE $? "Started MySQL server"
-STEP_STATUS $? "starting successfull , now setting up root password MYSQL" | tee -a $LOG_FILE
+STEP_STATUS $? "starting successfull , now checking root password set up on MYSQL" | tee -a $LOG_FILE
 
 mysql -h mysql.yashd.icu -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 
