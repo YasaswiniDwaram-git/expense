@@ -58,8 +58,9 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATE $? "Downloding backend app code"
 
 cd /app &>>$LOG_FILE
+rm -rf /app/*     #this helps in removing previous version and deploy new version if available instead of re-write
 unzip /tmp/backend.zip
-VALIDATE $? "extracting backend app to tmp folder"
+VALIDATE $? "extracting latest backend app to tmp folder"
 
 
 
