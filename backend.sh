@@ -46,9 +46,9 @@ id expense
 if [ $? -ne 0 ]
 then
     useradd expense &>>$LOG_FILE
-    VALIDATE $? "creating system user -expense as it does not exist"
+    VALIDATE $? "creating system user -expense"
 else 
-    echo "user already present"
+    echo -e "user already present , hence $Y SKIPPIN $N "
 fi
 
 
